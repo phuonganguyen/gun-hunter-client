@@ -1,13 +1,14 @@
 import Web3 from "../../libs/web3.min.js";
+import GameService from "./GameService.js";
 import HandleTransactionResponse from "./HandleTransactionResponse";
 
 // import GameService from "./GameService";
 interface Account {
     address: string;
-    name: string;
-    allowance_ether: string;
-    tokenBalance_ether: string;
-    gameBalance_ether: string;
+    name?: string;
+    allowance_ether?: string;
+    tokenBalance_ether?: string;
+    gameBalance_ether?: string;
 }
 
 export interface RoomType {
@@ -27,6 +28,7 @@ export default class AccountManager {
     public isLoggedIn: boolean = false;
     public account: Account;
     public signedInCallback: () => void;
+    public address: string;
 
     private window = window as any;
     private static instance: AccountManager;
@@ -55,10 +57,7 @@ export default class AccountManager {
     }
 
     getAddress(): string {
-        if (!this.account) {
-            return '';
-        }
-        return this.account.address;
+        return this.address;
     }
 
     isLogined(): boolean {
@@ -99,8 +98,9 @@ export default class AccountManager {
         console.log('initAccount');
         this.web3.eth.getAccounts().then((accounts) => {
             if (accounts.length > 0) {
-                const address = accounts[0].toLowerCase();
-                //GameService.getInstance().joinLobby(address, this.signedIn.bind(this));
+                this.address = accounts[0].toLowerCase();
+                this.signedInCallback();
+                GameService.getInstance().joinLobby(this.address, this.signedIn.bind(this));
             } else {
                 console.log('YOU MUST ENABLE AND LOGIN INTO YOUR WALLET OR METAMASK ACCOUNTS!');
             }
@@ -156,7 +156,7 @@ export default class AccountManager {
 
     private getBalance(contract) {
         return contract.methods
-            .balanceOf(this.account.address)
+            .balanceOf(this.address)
             .call()
             .catch((error) => {
                 console.log(error);
@@ -165,7 +165,7 @@ export default class AccountManager {
 
     private getAllowance() {
         this.tokenContract.methods
-            .allowance(this.account.address, this.APPROVE_ADDRESS)
+            .allowance(this.address, this.APPROVE_ADDRESS)
             .call()
             .then((result) => {
                 this.account.allowance_ether = AccountManager.toEther(result);
@@ -179,7 +179,7 @@ export default class AccountManager {
         return new Promise((resolve) => {
             this.tokenContract.methods
                 .approve(this.APPROVE_ADDRESS, '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-                .send({ from: this.account.address })
+                .send({ from: this.address })
                 .then((result) => {
                     resolve('APPROVED!');
                 })

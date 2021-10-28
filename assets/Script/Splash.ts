@@ -3,10 +3,10 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class Splash extends cc.Component {
     @property(cc.ProgressBar)
-    progressBar: cc.ProgressBar;
+    progressBar: cc.ProgressBar = null;
 
     @property(cc.Label)
-    progressLabel: cc.Label;
+    progressLabel: cc.Label = null;
 
     onLoad() {
         this.updateProgress(0);

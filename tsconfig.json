@@ -7,8 +7,8 @@
     "skipLibCheck": true,
     "outDir": "temp/vscode-dist",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true
   },
