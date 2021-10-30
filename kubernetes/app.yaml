@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: gunhunter-web-client
+    app: gunhunternft-client
   managedFields:
     - apiVersion: apps/v1
       fieldsType: FieldsV1
@@ -44,7 +44,7 @@ metadata:
               'f:terminationGracePeriodSeconds': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: '2021-10-30T15:44:31Z'
+      time: '2021-10-30T17:20:46Z'
     - apiVersion: apps/v1
       fieldsType: FieldsV1
       fieldsV1:
@@ -78,14 +78,14 @@ metadata:
           'f:updatedReplicas': {}
       manager: kube-controller-manager
       operation: Update
-      time: '2021-10-30T15:44:53Z'
-  name: gunhunter-web-client
+      time: '2021-10-30T17:20:48Z'
+  name: gunhunternft-client
   namespace: default
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: gunhunter-web-client
+      app: gunhunternft-client
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -94,7 +94,7 @@ spec:
   template:
     metadata:
       labels:
-        app: gunhunter-web-client
+        app: gunhunternft-client
     spec:
       containers:
         - image: gcr.io/direct-bonsai-330209/github.com/gun-hunter-nft/game-client
@@ -105,7 +105,7 @@ apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    app: gunhunter-web-client
+    app: gunhunternft-client
   managedFields:
     - apiVersion: autoscaling/v2beta1
       fieldsType: FieldsV1
@@ -124,7 +124,7 @@ metadata:
             'f:name': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: '2021-10-30T15:44:31Z'
+      time: '2021-10-30T17:20:46Z'
     - apiVersion: autoscaling/v1
       fieldsType: FieldsV1
       fieldsV1:
@@ -136,8 +136,8 @@ metadata:
           'f:currentReplicas': {}
       manager: vpa-recommender
       operation: Update
-      time: '2021-10-30T15:44:46Z'
-  name: gunhunter-web-client-hpa-x8pj
+      time: '2021-10-30T17:21:02Z'
+  name: gunhunternft-client-hpa-1uhe
   namespace: default
 spec:
   maxReplicas: 5
@@ -150,7 +150,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: gunhunter-web-client
+    name: gunhunternft-client
 ---
 apiVersion: v1
 kind: Service
@@ -160,7 +160,7 @@ metadata:
   finalizers:
     - service.kubernetes.io/load-balancer-cleanup
   labels:
-    app: gunhunter-web-client
+    app: gunhunternft-client
   managedFields:
     - apiVersion: v1
       fieldsType: FieldsV1
@@ -185,7 +185,7 @@ metadata:
           'f:type': {}
       manager: GoogleCloudConsole
       operation: Update
-      time: '2021-10-30T15:45:46Z'
+      time: '2021-10-30T17:29:43Z'
     - apiVersion: v1
       fieldsType: FieldsV1
       fieldsV1:
@@ -198,20 +198,20 @@ metadata:
             'f:ingress': {}
       manager: kube-controller-manager
       operation: Update
-      time: '2021-10-30T15:46:40Z'
-  name: gunhunter-web-client-service
+      time: '2021-10-30T17:30:25Z'
+  name: gunhunternft-client-service
   namespace: default
 spec:
-  clusterIP: 10.80.0.122
+  clusterIP: 10.80.5.71
   clusterIPs:
-    - 10.80.0.122
+    - 10.80.5.71
   externalTrafficPolicy: Cluster
   ports:
-    - nodePort: 31265
+    - nodePort: 30089
       port: 8080
       protocol: TCP
       targetPort: 80
   selector:
-    app: gunhunter-web-client
+    app: gunhunternft-client
   sessionAffinity: None
   type: LoadBalancer
