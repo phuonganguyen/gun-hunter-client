@@ -1,5 +1,5 @@
 import Web3 from "../../libs/web3.min.js";
-import GameService from "./GameService.js";
+import GameService from "./GameService";
 import HandleTransactionResponse from "./HandleTransactionResponse";
 
 // import GameService from "./GameService";
