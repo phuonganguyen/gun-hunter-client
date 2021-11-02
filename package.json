@@ -4,5 +4,8 @@
     "main": "index.js",
     "repository": "https://github.com/Gun-Hunter-NFT/game-client.git",
     "author": "phuonganguyen <phuong.nguyenanh06@gmail.com>",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^0.24.0"
+    }
 }

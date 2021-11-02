@@ -1,13 +1,16 @@
 import AccountManager from "./common/AccountManager";
+import BackendService from "./services/BackendService";
 
 const { ccclass, property } = cc._decorator;
 @ccclass
 export default class Lobby extends cc.Component {
     private readonly accountManager: AccountManager;
+    private readonly backendService: BackendService;
 
     constructor() {
         super();
         this.accountManager = AccountManager.getInstance();
+        this.backendService = BackendService.getInstance();
     }
 
     @property(cc.Label)
@@ -16,16 +19,18 @@ export default class Lobby extends cc.Component {
     @property(cc.JsonAsset)
     contractABI: cc.JsonAsset = null;
 
-    // LIFE-CYCLE CALLBACKS:
     onLoad() {
         this.accountManager.setJsonAbi(this.contractABI);
         this.accountManager.login();
         this.accountManager.signedInCallback = this.signedIn.bind(this);
     }
 
-    private signedIn() {
-        console.log(this.accountManager.getAddress());
-        this.address.string = this.accountManager.getAddress();
+    private async signedIn() {
+        const address = this.accountManager.getAddress();
+        console.log(address);
+        this.address.string = address;
+        const authData = await this.backendService.auth(address);
+        console.log(authData);
     }
 
     startUpdateBalance() {

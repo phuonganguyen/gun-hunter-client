@@ -53,18 +53,6 @@ export default class AccountManager {
     }
 
     login() {
-        this.initWeb3();
-    }
-
-    getAddress(): string {
-        return this.address;
-    }
-
-    isLogined(): boolean {
-        return this.account !== null;
-    }
-
-    private initWeb3() {
         const isWeb3Enabled = () => !!this.window.web3;
         if (isWeb3Enabled()) {
             this.web3 = new Web3();
@@ -92,6 +80,14 @@ export default class AccountManager {
         } else {
             console.log('YOU MUST ENABLE AND LOGIN INTO YOUR WALLET OR METAMASK ACCOUNTS!');
         }
+    }
+
+    getAddress(): string {
+        return this.address;
+    }
+
+    isLogined(): boolean {
+        return this.account !== null;
     }
 
     private initAccount() {
