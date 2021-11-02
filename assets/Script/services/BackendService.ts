@@ -1,5 +1,12 @@
 import axios from "axios";
 
+interface AuthResponse {
+    access_token: string;
+    address: string;
+    heroId: number;
+    username: string;
+}
+
 export default class BackendService {
     private static instance: BackendService;
     private baseAPIUri = 'http://34.116.121.99:30100';
@@ -15,7 +22,7 @@ export default class BackendService {
     async auth(address: string) {
         const data = { address };
         console.log(data);
-        const response = await axios.post(`${this.baseAPIUri}/auth`, data);
+        const response = await axios.post<AuthResponse>(`${this.baseAPIUri}/auth`, data);
         return response.data;
     }
 

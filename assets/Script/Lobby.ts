@@ -14,7 +14,7 @@ export default class Lobby extends cc.Component {
     }
 
     @property(cc.Label)
-    address: cc.Label = null;
+    username: cc.Label = null;
 
     @property(cc.JsonAsset)
     contractABI: cc.JsonAsset = null;
@@ -27,10 +27,9 @@ export default class Lobby extends cc.Component {
 
     private async signedIn() {
         const address = this.accountManager.getAddress();
-        console.log(address);
-        this.address.string = address;
         const authData = await this.backendService.auth(address);
-        console.log(authData);
+        this.username.string = authData.username;
+        localStorage.setItem('token', authData.access_token);
     }
 
     startUpdateBalance() {
