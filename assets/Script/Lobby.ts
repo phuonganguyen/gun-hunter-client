@@ -25,11 +25,17 @@ export default class Lobby extends cc.Component {
         this.accountManager.signedInCallback = this.signedIn.bind(this);
     }
 
+    marketPlace() {
+        cc.director.loadScene('marketplace');
+    }
+
     private async signedIn() {
         const address = this.accountManager.getAddress();
         const authData = await this.backendService.auth(address);
         this.username.string = authData.username;
         localStorage.setItem('token', authData.access_token);
+        const contracts = await this.backendService.getContracts();
+        console.log(contracts);
     }
 
     startUpdateBalance() {
