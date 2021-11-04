@@ -13,6 +13,9 @@ export default class Lobby extends cc.Component {
         this.backendService = BackendService.getInstance();
     }
 
+    @property(cc.Sprite)
+    avatar: cc.Sprite = null;
+
     @property(cc.Label)
     username: cc.Label = null;
 
@@ -33,9 +36,18 @@ export default class Lobby extends cc.Component {
         const address = this.accountManager.getAddress();
         const authData = await this.backendService.auth(address);
         this.username.string = authData.username;
+        this.loadAvatar(authData.avatar_id);
         localStorage.setItem('token', authData.access_token);
         const contracts = await this.backendService.getContracts();
         console.log(contracts);
+    }
+
+    loadAvatar(avatarId: number) {
+        console.log(avatarId);
+        const self = this;
+        cc.resources.load(`avatars/avt${avatarId}`, cc.SpriteFrame, function (err, spriteFrame) {
+            self.avatar.spriteFrame = spriteFrame;
+        });
     }
 
     startUpdateBalance() {

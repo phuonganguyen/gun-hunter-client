@@ -5,6 +5,7 @@ interface AuthResponse {
     address: string;
     heroId: number;
     username: string;
+    avatar_id: number;
 }
 
 export default class BackendService {
