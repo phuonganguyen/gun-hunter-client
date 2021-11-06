@@ -31,7 +31,6 @@ metadata:
               'f:containers':
                 'k:{"name":"game-client-1"}':
                   .: {}
-                  'f:image': {}
                   'f:imagePullPolicy': {}
                   'f:name': {}
                   'f:resources': {}
@@ -45,6 +44,29 @@ metadata:
       manager: GoogleCloudConsole
       operation: Update
       time: '2021-10-30T17:20:46Z'
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:gcb-build-id': {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:app.kubernetes.io/version': {}
+        'f:spec':
+          'f:template':
+            'f:metadata':
+              'f:annotations':
+                'f:gcb-build-id': {}
+              'f:labels':
+                'f:app.kubernetes.io/version': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"game-client-1"}':
+                  'f:image': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2021-11-06T11:42:40Z'
     - apiVersion: apps/v1
       fieldsType: FieldsV1
       fieldsV1:
@@ -78,7 +100,7 @@ metadata:
           'f:updatedReplicas': {}
       manager: kube-controller-manager
       operation: Update
-      time: '2021-10-30T17:20:48Z'
+      time: '2021-11-06T20:22:09Z'
   name: gunhunternft-client
   namespace: default
 spec:
@@ -137,6 +159,18 @@ metadata:
       manager: vpa-recommender
       operation: Update
       time: '2021-10-30T17:21:02Z'
+    - apiVersion: autoscaling/v2beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:gcb-build-id': {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:app.kubernetes.io/version': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2021-11-06T11:42:42Z'
   name: gunhunternft-client-hpa-1uhe
   namespace: default
 spec:
@@ -199,6 +233,18 @@ metadata:
       manager: kube-controller-manager
       operation: Update
       time: '2021-10-30T17:30:25Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:gcb-build-id': {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:app.kubernetes.io/version': {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2021-11-06T11:42:43Z'
   name: gunhunternft-client-service
   namespace: default
 spec:
