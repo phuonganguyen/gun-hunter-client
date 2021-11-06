@@ -42,6 +42,7 @@ export default class AccountManager {
 
     private readonly TOKEN_ADDRESS = '0x9b66f614f4a6aa2d4f8de1a0b7889bcf47b5238d';
     private APPROVE_ADDRESS;
+    private contract;
 
     public updateBalanceCallBack: (tokenBalance, gameBalance) => void;
     private onTransactionCallBack: (handle: HandleTransactionResponse) => void;
@@ -50,6 +51,10 @@ export default class AccountManager {
 
     setJsonAbi(tokenJsonAbi: cc.JsonAsset) {
         this.tokenJsonAbi = tokenJsonAbi;
+    }
+
+    setContract(contract) {
+        this.contract = contract;
     }
 
     login() {
@@ -237,5 +242,27 @@ export default class AccountManager {
             return;
         }
         this.onTransactionCallBack(handle);
+    }
+
+    async transferCoin(coins) {
+        console.log(this.contract);
+        const coinContract = new this.web3.eth.Contract(this.contract.contract_abi, this.contract.contract_address);
+        const rawData = coinContract.methods.transfer(this.contract.owner_address, coins * 1e9).encodeABI();
+
+        const transactionParameters = {
+            gasPrice: this.web3.utils.toHex(Web3.utils.toWei('10', 'gwei')), // customizable by user during MetaMask confirmation.
+            gas: this.web3.utils.toHex(70000), // customizable by user during MetaMask confirmation.
+            to: this.contract.contract_address, // Required except during contract publications.
+            from: this.window.ethereum.selectedAddress, // must match user's active address.
+            value: '0x00', // Only required to send ether to the recipient from the initiating external account.
+            data: rawData, // Optional, but used for defining smart contract creation and interaction.
+        };
+
+        const txHash = await this.window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+        });
+
+        return txHash;
     }
 }

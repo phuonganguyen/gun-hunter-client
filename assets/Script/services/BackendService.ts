@@ -8,7 +8,7 @@ interface AuthResponse {
     avatar_id: number;
 }
 
-interface Hero {
+export interface Hero {
     id: number;
     name: string;
     price: number;
@@ -17,7 +17,7 @@ interface Hero {
 
 export default class BackendService {
     private static instance: BackendService;
-    private baseAPIUri = 'http://34.116.121.99:30100';
+    private baseAPIUri = 'http://34.116.121.99:4000';
 
     public static getInstance() {
         if (!this.instance) {
@@ -34,15 +34,32 @@ export default class BackendService {
         return response.data;
     }
 
-    async getContracts() {
+    async getContract() {
         const token = localStorage.getItem('token');
         const response = await axios.get(`${this.baseAPIUri}/contracts`, { headers: { Authorization: `Bearer ${token}` } });
-        return response.data;
+        return response.data.find((item) => item.contract_symbol === 'GHF');
     }
 
     async getHero(heroId: string) {
         const token = localStorage.getItem('token');
         const response = await axios.get<Hero>(`${this.baseAPIUri}/heroes/${heroId}`, { headers: { Authorization: `Bearer ${token}` } });
+
+        return response.data;
+    }
+
+    async buyHero(heroId: number, txHash: string) {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(
+            `${this.baseAPIUri}/orders`,
+            {
+                hero_id: heroId,
+                amount: 1,
+                transaction_hash: txHash,
+            },
+            { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
+        );
+
+        console.log(response.data);
 
         return response.data;
     }

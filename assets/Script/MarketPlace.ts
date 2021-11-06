@@ -1,5 +1,6 @@
+import AccountManager from "./common/AccountManager";
 import SnappedScrollView from "./controls/SnappedScrollView";
-import BackendService from "./services/BackendService";
+import BackendService, { Hero } from "./services/BackendService";
 
 const { ccclass, property } = cc._decorator;
 
@@ -10,10 +11,12 @@ export default class MarketPlace extends cc.Component {
     private selectedIndex = 0;
     private readonly displaySize = 3;
     private readonly backendService: BackendService;
+    private readonly accountManager: AccountManager;
 
     constructor() {
         super();
         this.backendService = BackendService.getInstance();
+        this.accountManager = AccountManager.getInstance();
     }
 
     @property(cc.Node)
@@ -40,6 +43,7 @@ export default class MarketPlace extends cc.Component {
     public onChanged: OnChangedBet = (bet) => {};
 
     private heroList: cc.Node[] = [];
+    private selectedHero: Hero;
 
     onLoad() {
         this.leftButton.active = false;
@@ -159,11 +163,17 @@ export default class MarketPlace extends cc.Component {
     async setCurrentHero(hero: string) {
         this.updateSelectedHero(hero);
         const heroInfo = await this.backendService.getHero(hero);
-        console.log(heroInfo);
+        this.selectedHero = heroInfo;
+        console.log(this.selectedHero);
         this.heroName.string = heroInfo.name;
         this.heroPrice.string = heroInfo.price.toString();
         heroInfo.percents.forEach((value, index) => {
             this.powers[index].string = value.toString();
         });
+    }
+
+    async onBuyHero() {
+        const txHash = await this.accountManager.transferCoin(this.selectedHero.price);
+        await this.backendService.buyHero(this.selectedHero.id, txHash);
     }
 }

@@ -38,8 +38,9 @@ export default class Lobby extends cc.Component {
         this.username.string = authData.username;
         this.loadAvatar(authData.avatar_id);
         localStorage.setItem('token', authData.access_token);
-        const contracts = await this.backendService.getContracts();
-        console.log(contracts);
+        const contract = await this.backendService.getContract();
+        console.log(contract);
+        this.accountManager.setContract(contract);
     }
 
     loadAvatar(avatarId: number) {
