@@ -1,31 +1,54 @@
 import AccountManager from "./common/AccountManager";
+import BackendService from "./services/BackendService";
 
 const { ccclass, property } = cc._decorator;
 @ccclass
 export default class Lobby extends cc.Component {
     private readonly accountManager: AccountManager;
+    private readonly backendService: BackendService;
 
     constructor() {
         super();
         this.accountManager = AccountManager.getInstance();
+        this.backendService = BackendService.getInstance();
     }
 
+    @property(cc.Sprite)
+    avatar: cc.Sprite = null;
+
     @property(cc.Label)
-    address: cc.Label = null;
+    username: cc.Label = null;
 
     @property(cc.JsonAsset)
     contractABI: cc.JsonAsset = null;
 
-    // LIFE-CYCLE CALLBACKS:
     onLoad() {
         this.accountManager.setJsonAbi(this.contractABI);
         this.accountManager.login();
         this.accountManager.signedInCallback = this.signedIn.bind(this);
     }
 
-    private signedIn() {
-        console.log(this.accountManager.getAddress());
-        this.address.string = this.accountManager.getAddress();
+    marketPlace() {
+        cc.director.loadScene('marketplace');
+    }
+
+    private async signedIn() {
+        const address = this.accountManager.getAddress();
+        const authData = await this.backendService.auth(address);
+        this.username.string = authData.username;
+        this.loadAvatar(authData.avatar_id);
+        localStorage.setItem('token', authData.access_token);
+        const contract = await this.backendService.getContract();
+        console.log(contract);
+        this.accountManager.setContract(contract);
+    }
+
+    loadAvatar(avatarId: number) {
+        console.log(avatarId);
+        const self = this;
+        cc.resources.load(`avatars/avt${avatarId}`, cc.SpriteFrame, function (err, spriteFrame) {
+            self.avatar.spriteFrame = spriteFrame;
+        });
     }
 
     startUpdateBalance() {
