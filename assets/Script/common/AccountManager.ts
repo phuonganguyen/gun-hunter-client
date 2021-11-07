@@ -44,7 +44,7 @@ export default class AccountManager {
     private APPROVE_ADDRESS;
     private contract;
 
-    public updateBalanceCallBack: (tokenBalance, gameBalance) => void;
+    public updateBalanceCallBack: (tokenBalance) => void;
     private onTransactionCallBack: (handle: HandleTransactionResponse) => void;
     private onFisnishTransactionCallBack: () => void;
     private roomTypes: RoomType[];
@@ -114,23 +114,23 @@ export default class AccountManager {
             this.signedInCallback();
         }
 
-        await this.initContract();
+        //await this.initContract();
         await this.updateBalance();
         await this.getAllowance();
 
         this.isLoggedIn = true;
     }
 
-    private initContract() {
-        if (!this.tokenJsonAbi) {
-            return;
-        }
+    public async initContract(contract) {
         console.log('init contract');
-        return this.web3.eth.net.getNetworkType().then((netId) => {
-            if (!this.tokenContract) {
-                this.tokenContract = new this.web3.eth.Contract(this.tokenJsonAbi.json, this.TOKEN_ADDRESS);
-            }
-        });
+        await this.web3.eth.net.getNetworkType();
+        this.tokenContract = new this.web3.eth.Contract(contract.contract_abi, contract.contract_address);
+
+        // return this.web3.eth.net.getNetworkType().then((netId) => {
+        //     if (!this.tokenContract) {
+        //         console.log(this.tokenContract);
+        //     }
+        // });
     }
 
     public async updateBalance() {
@@ -138,13 +138,16 @@ export default class AccountManager {
             return;
         }
 
-        this.account.tokenBalance_ether = await this.getBalance(this.tokenContract).then((balance) => {
-            return AccountManager.toEther(balance);
-        });
+        const balance = await this.getBalance(this.tokenContract);
+        return AccountManager.toEther(balance);
 
-        if (this.updateBalanceCallBack) {
-            this.updateBalanceCallBack(this.account.tokenBalance_ether, this.account.gameBalance_ether);
-        }
+        // this.account.tokenBalance_ether = await this.getBalance(this.tokenContract).then((balance) => {
+        //     return AccountManager.toEther(balance);
+        // });
+
+        // if (this.updateBalanceCallBack) {
+        //     this.updateBalanceCallBack(this.account.tokenBalance_ether, this.account.gameBalance_ether);
+        // }
     }
 
     public async startUpdateBalance() {

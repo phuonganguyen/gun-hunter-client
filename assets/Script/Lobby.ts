@@ -39,8 +39,10 @@ export default class Lobby extends cc.Component {
         this.loadAvatar(authData.avatar_id);
         localStorage.setItem('token', authData.access_token);
         const contract = await this.backendService.getContract();
-        console.log(contract);
         this.accountManager.setContract(contract);
+        await this.accountManager.initContract(contract);
+        const balance = await this.accountManager.updateBalance();
+        console.log(balance);
     }
 
     loadAvatar(avatarId: number) {

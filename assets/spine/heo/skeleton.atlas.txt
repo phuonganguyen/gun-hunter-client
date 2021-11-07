@@ -1,0 +1,69 @@
+
+skeleton.png
+size: 531, 225
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+bàn tay cấm súng
+  rotate: false
+  xy: 267, 115
+  size: 262, 110
+  orig: 262, 110
+  offset: 0, 0
+  index: -1
+chanphai
+  rotate: true
+  xy: 267, 4
+  size: 109, 96
+  orig: 109, 96
+  offset: 0, 0
+  index: -1
+chantrai
+  rotate: false
+  xy: 185, 6
+  size: 80, 87
+  orig: 80, 87
+  offset: 0, 0
+  index: -1
+head
+  rotate: true
+  xy: 2, 23
+  size: 202, 181
+  orig: 202, 181
+  offset: 0, 0
+  index: -1
+mí mắt
+  rotate: true
+  xy: 408, 16
+  size: 97, 38
+  orig: 97, 38
+  offset: 0, 0
+  index: -1
+tayphai
+  rotate: true
+  xy: 448, 6
+  size: 58, 67
+  orig: 58, 67
+  offset: 0, 0
+  index: -1
+taytrai
+  rotate: true
+  xy: 448, 66
+  size: 47, 78
+  orig: 47, 78
+  offset: 0, 0
+  index: -1
+than
+  rotate: true
+  xy: 185, 95
+  size: 130, 72
+  orig: 130, 72
+  offset: 0, 0
+  index: -1
+vongco
+  rotate: true
+  xy: 365, 15
+  size: 98, 41
+  orig: 98, 41
+  offset: 0, 0
+  index: -1
