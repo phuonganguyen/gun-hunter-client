@@ -37,7 +37,11 @@ export default class BackendService {
     async getContract() {
         const token = localStorage.getItem('token');
         const response = await axios.get(`${this.baseAPIUri}/contracts`, { headers: { Authorization: `Bearer ${token}` } });
-        return response.data.find((item) => item.contract_symbol === 'GHF');
+
+        return {
+            coin: response.data.find((item) => item.contract_symbol === 'GHF'),
+            nft: response.data.find((item) => item.contract_symbol === 'GHT'),
+        };
     }
 
     async getHero(heroId: string) {

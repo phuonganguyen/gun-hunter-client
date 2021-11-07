@@ -23,7 +23,6 @@ export default class Lobby extends cc.Component {
     contractABI: cc.JsonAsset = null;
 
     onLoad() {
-        this.accountManager.setJsonAbi(this.contractABI);
         this.accountManager.login();
         this.accountManager.signedInCallback = this.signedIn.bind(this);
     }
@@ -43,6 +42,7 @@ export default class Lobby extends cc.Component {
         await this.accountManager.initContract(contract);
         const balance = await this.accountManager.updateBalance();
         console.log(balance);
+        const hero = await this.accountManager.heroNFT();
     }
 
     loadAvatar(avatarId: number) {
