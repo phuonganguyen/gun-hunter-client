@@ -5,11 +5,11 @@ export default class Splash extends cc.Component {
     @property(cc.ProgressBar)
     progressBar: cc.ProgressBar = null;
 
-    @property(cc.Label)
-    progressLabel: cc.Label = null;
+    @property([cc.Node])
+    dot: cc.Node[] = [];
 
     onLoad() {
-        this.updateProgress(0);
+        this.progressBar.progress = 0;
         this.loadLobby();
     }
 
@@ -24,16 +24,11 @@ export default class Splash extends cc.Component {
 
     onProgress(completedCount: number, totalCount) {
         const percent = completedCount / totalCount;
-        this.updateProgress(percent);
+        this.progressBar.progress = percent;
     }
 
     onLoaded(err, asset) {
         cc.director.loadScene('lobby');
-    }
-
-    updateProgress(progress: number) {
-        this.progressBar.progress = progress;
-        this.progressLabel.string = `${Math.round(progress * 100)}%`;
     }
 
     // start() {}
