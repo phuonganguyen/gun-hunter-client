@@ -63,7 +63,12 @@ export default class BackendService {
             { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
         );
 
-        console.log(response.data);
+        return response.data;
+    }
+
+    async getOwnerRecords() {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${this.baseAPIUri}/owner/records`, { headers: { Authorization: `Bearer ${token}` } });
 
         return response.data;
     }

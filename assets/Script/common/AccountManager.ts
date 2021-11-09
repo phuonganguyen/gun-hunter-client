@@ -136,20 +136,12 @@ export default class AccountManager {
     }
 
     public async updateBalance() {
-        if (this.tokenContract) {
+        if (!this.tokenContract) {
             return;
         }
 
         const balance = await this.getBalance(this.tokenContract);
         return AccountManager.toEther(balance);
-
-        // this.account.tokenBalance_ether = await this.getBalance(this.tokenContract).then((balance) => {
-        //     return AccountManager.toEther(balance);
-        // });
-
-        // if (this.updateBalanceCallBack) {
-        //     this.updateBalanceCallBack(this.account.tokenBalance_ether, this.account.gameBalance_ether);
-        // }
     }
 
     public async startUpdateBalance() {
@@ -161,6 +153,7 @@ export default class AccountManager {
     }
 
     private getBalance(contract) {
+        console.log(this.address);
         return contract.methods
             .balanceOf(this.address)
             .call()
@@ -279,8 +272,6 @@ export default class AccountManager {
         const data = userEthNFTs.filter(
             (item) => item?.token_address?.toLowerCase() === this.contract.nft?.contract_address?.toLowerCase()
         );
-
-        console.log(data);
 
         return data;
     }

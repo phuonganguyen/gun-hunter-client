@@ -1,4 +1,6 @@
 import AccountManager from "./common/AccountManager";
+import NumberHelper from "./common/helpers/NumberHelper";
+import Hero from "./components/Hero";
 import BackendService from "./services/BackendService";
 
 const { ccclass, property } = cc._decorator;
@@ -19,8 +21,14 @@ export default class Lobby extends cc.Component {
     @property(cc.Label)
     username: cc.Label = null;
 
-    @property(cc.JsonAsset)
-    contractABI: cc.JsonAsset = null;
+    @property(cc.Label)
+    balance: cc.Label = null;
+
+    @property(cc.Node)
+    noHero: cc.Node = null;
+
+    @property(cc.Node)
+    hero: cc.Node = null;
 
     onLoad() {
         this.accountManager.login();
@@ -34,6 +42,7 @@ export default class Lobby extends cc.Component {
     private async signedIn() {
         const address = this.accountManager.getAddress();
         const authData = await this.backendService.auth(address);
+        console.log(authData);
         this.username.string = authData.username;
         this.loadAvatar(authData.avatar_id);
         localStorage.setItem('token', authData.access_token);
@@ -41,8 +50,17 @@ export default class Lobby extends cc.Component {
         this.accountManager.setContract(contract);
         await this.accountManager.initContract(contract);
         const balance = await this.accountManager.updateBalance();
-        console.log(balance);
-        const hero = await this.accountManager.heroNFT();
+        this.balance.string = NumberHelper.roundNumber(parseFloat(balance), 4) + '';
+        const hero = await this.backendService.getOwnerRecords();
+        if (hero) {
+            this.noHero.active = false;
+            this.hero.active = true;
+            const heroComponent = this.hero.getComponent(Hero);
+            heroComponent.setData(hero);
+        } else {
+            this.noHero.active = true;
+            this.hero.active = false;
+        }
     }
 
     loadAvatar(avatarId: number) {
