@@ -39,6 +39,10 @@ export default class Lobby extends cc.Component {
         cc.director.loadScene('marketplace');
     }
 
+    myWarriors() {
+        cc.director.loadScene('warriors');
+    }
+
     private async signedIn() {
         const address = this.accountManager.getAddress();
         const authData = await this.backendService.auth(address);

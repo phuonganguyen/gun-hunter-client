@@ -141,7 +141,7 @@ export default class AccountManager {
         }
 
         const balance = await this.getBalance(this.tokenContract);
-        return AccountManager.toEther(balance);
+        return balance / 1e9 || 0;
     }
 
     public async startUpdateBalance() {
