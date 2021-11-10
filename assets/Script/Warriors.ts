@@ -20,21 +20,30 @@ export default class Warriors extends cc.Component {
 
     async onLoad() {
         this.heroes = await this.backendService.getHeroes();
-        this.loadHero();
+        this.loadHero(this.selectedIndex);
     }
 
-    loadHero() {
-        this.hero.setData(this.heroes[this.selectedIndex]);
+    loadHero(heroIndex: number) {
+        this.hero.setData(this.heroes[heroIndex]);
     }
 
     next() {
-        this.selectedIndex++;
-        this.loadHero();
+        if (this.selectedIndex === this.heroes.length - 1) {
+            this.selectedIndex = 0;
+        } else {
+            this.selectedIndex++;
+        }
+
+        this.loadHero(this.selectedIndex);
     }
 
     prev() {
-        this.selectedIndex--;
-        this.loadHero();
+        if (this.selectedIndex === 0) {
+            this.selectedIndex = this.heroes.length - 1;
+        } else {
+            this.selectedIndex--;
+        }
+        this.loadHero(this.selectedIndex);
     }
 
     back() {
