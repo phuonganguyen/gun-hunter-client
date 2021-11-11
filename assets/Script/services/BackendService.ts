@@ -29,26 +29,26 @@ export default class BackendService {
 
     async auth(address: string) {
         const data = { address };
-        console.log(data);
         const response = await axios.post<AuthResponse>(`${this.baseAPIUri}/auth`, data);
         return response.data;
     }
 
     async getContract() {
-        const token = localStorage.getItem('token');
-        const response = await axios.get(`${this.baseAPIUri}/contracts`, { headers: { Authorization: `Bearer ${token}` } });
-        return response.data.find((item) => item.contract_symbol === 'GHF');
+        const response = await axios.get(`${this.baseAPIUri}/contracts`, this.buildHeaderRequest());
+
+        return {
+            coin: response.data.find((item) => item.contract_symbol === 'GHF'),
+            nft: response.data.find((item) => item.contract_symbol === 'GHT'),
+        };
     }
 
     async getHero(heroId: string) {
-        const token = localStorage.getItem('token');
-        const response = await axios.get<Hero>(`${this.baseAPIUri}/heroes/${heroId}`, { headers: { Authorization: `Bearer ${token}` } });
+        const response = await axios.get<Hero>(`${this.baseAPIUri}/heroes/${heroId}`, this.buildHeaderRequest());
 
         return response.data;
     }
 
     async buyHero(heroId: number, txHash: string) {
-        const token = localStorage.getItem('token');
         const response = await axios.post(
             `${this.baseAPIUri}/orders`,
             {
@@ -56,11 +56,26 @@ export default class BackendService {
                 amount: 1,
                 transaction_hash: txHash,
             },
-            { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` } }
+            this.buildHeaderRequest()
         );
 
-        console.log(response.data);
+        return response.data;
+    }
+
+    async getOwnerRecords() {
+        const response = await axios.get(`${this.baseAPIUri}/owner/records`, this.buildHeaderRequest());
 
         return response.data;
+    }
+
+    async getHeroes() {
+        const response = await axios.get(`${this.baseAPIUri}/owner/heroes`, this.buildHeaderRequest());
+
+        return response.data;
+    }
+
+    buildHeaderRequest() {
+        const token = localStorage.getItem('token');
+        return { headers: { Authorization: `Bearer ${token}` } };
     }
 }

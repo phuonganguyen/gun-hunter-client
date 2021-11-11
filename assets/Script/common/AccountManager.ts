@@ -1,3 +1,4 @@
+import Moralis from "../../libs/moralis.min.js";
 import Web3 from "../../libs/web3.min.js";
 import GameService from "./GameService";
 import HandleTransactionResponse from "./HandleTransactionResponse";
@@ -17,6 +18,10 @@ export interface RoomType {
 }
 
 export default class AccountManager {
+    /* Moralis init code */
+    private readonly serverUrl = 'https://kdlpb0cvts4u.usemoralis.com:2053/server';
+    private readonly appId = 'sDLLuGfjkVhHPDq3LbVEi31FvVGnHxTfYKV6CSzo';
+
     public static getInstance(): AccountManager {
         if (!this.instance) {
             this.instance = new AccountManager();
@@ -33,25 +38,19 @@ export default class AccountManager {
     private window = window as any;
     private static instance: AccountManager;
     private web3;
+    private user;
 
     static utils;
 
     private tokenContract;
 
-    private tokenJsonAbi: cc.JsonAsset;
-
-    private readonly TOKEN_ADDRESS = '0x9b66f614f4a6aa2d4f8de1a0b7889bcf47b5238d';
     private APPROVE_ADDRESS;
     private contract;
 
-    public updateBalanceCallBack: (tokenBalance, gameBalance) => void;
+    public updateBalanceCallBack: (tokenBalance) => void;
     private onTransactionCallBack: (handle: HandleTransactionResponse) => void;
     private onFisnishTransactionCallBack: () => void;
     private roomTypes: RoomType[];
-
-    setJsonAbi(tokenJsonAbi: cc.JsonAsset) {
-        this.tokenJsonAbi = tokenJsonAbi;
-    }
 
     setContract(contract) {
         this.contract = contract;
@@ -97,9 +96,12 @@ export default class AccountManager {
 
     private initAccount() {
         console.log('initAccount');
+        // Moralis.start({ serverUrl: this.serverUrl, appId: this.appId });
+        // this.user = await Moralis.authenticate();
         this.web3.eth.getAccounts().then((accounts) => {
             if (accounts.length > 0) {
                 this.address = accounts[0].toLowerCase();
+
                 this.signedInCallback();
                 GameService.getInstance().joinLobby(this.address, this.signedIn.bind(this));
             } else {
@@ -114,37 +116,32 @@ export default class AccountManager {
             this.signedInCallback();
         }
 
-        await this.initContract();
+        //await this.initContract();
         await this.updateBalance();
         await this.getAllowance();
 
         this.isLoggedIn = true;
     }
 
-    private initContract() {
-        if (!this.tokenJsonAbi) {
-            return;
-        }
+    public async initContract(contract) {
         console.log('init contract');
-        return this.web3.eth.net.getNetworkType().then((netId) => {
-            if (!this.tokenContract) {
-                this.tokenContract = new this.web3.eth.Contract(this.tokenJsonAbi.json, this.TOKEN_ADDRESS);
-            }
-        });
+        await this.web3.eth.net.getNetworkType();
+        this.tokenContract = new this.web3.eth.Contract(contract.coin.contract_abi, contract.coin.contract_address);
+
+        // return this.web3.eth.net.getNetworkType().then((netId) => {
+        //     if (!this.tokenContract) {
+        //         console.log(this.tokenContract);
+        //     }
+        // });
     }
 
     public async updateBalance() {
-        if (this.tokenContract) {
+        if (!this.tokenContract) {
             return;
         }
 
-        this.account.tokenBalance_ether = await this.getBalance(this.tokenContract).then((balance) => {
-            return AccountManager.toEther(balance);
-        });
-
-        if (this.updateBalanceCallBack) {
-            this.updateBalanceCallBack(this.account.tokenBalance_ether, this.account.gameBalance_ether);
-        }
+        const balance = await this.getBalance(this.tokenContract);
+        return balance / 1e9 || 0;
     }
 
     public async startUpdateBalance() {
@@ -156,6 +153,7 @@ export default class AccountManager {
     }
 
     private getBalance(contract) {
+        console.log(this.address);
         return contract.methods
             .balanceOf(this.address)
             .call()
@@ -246,13 +244,13 @@ export default class AccountManager {
 
     async transferCoin(coins) {
         console.log(this.contract);
-        const coinContract = new this.web3.eth.Contract(this.contract.contract_abi, this.contract.contract_address);
-        const rawData = coinContract.methods.transfer(this.contract.owner_address, coins * 1e9).encodeABI();
+        const coinContract = new this.web3.eth.Contract(this.contract.coin.contract_abi, this.contract.coin.contract_address);
+        const rawData = coinContract.methods.transfer(this.contract.coin.owner_address, coins * 1e9).encodeABI();
 
         const transactionParameters = {
             gasPrice: this.web3.utils.toHex(Web3.utils.toWei('10', 'gwei')), // customizable by user during MetaMask confirmation.
             gas: this.web3.utils.toHex(70000), // customizable by user during MetaMask confirmation.
-            to: this.contract.contract_address, // Required except during contract publications.
+            to: this.contract.coin.contract_address, // Required except during contract publications.
             from: this.window.ethereum.selectedAddress, // must match user's active address.
             value: '0x00', // Only required to send ether to the recipient from the initiating external account.
             data: rawData, // Optional, but used for defining smart contract creation and interaction.
@@ -264,5 +262,17 @@ export default class AccountManager {
         });
 
         return txHash;
+    }
+
+    async heroNFT() {
+        const options = { chain: 'bsc testnet', address: this.user.get('ethAddress') };
+
+        const userEthNFTs = await Moralis.Web3.getNFTs(options);
+
+        const data = userEthNFTs.filter(
+            (item) => item?.token_address?.toLowerCase() === this.contract.nft?.contract_address?.toLowerCase()
+        );
+
+        return data;
     }
 }

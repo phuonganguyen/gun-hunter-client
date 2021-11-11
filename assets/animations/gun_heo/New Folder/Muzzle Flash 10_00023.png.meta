@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "e7dff7bc-03fe-4bcf-9361-eb42e3f3745e",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 410,
+  "height": 196,
+  "platformSettings": {},
+  "subMetas": {
+    "Muzzle Flash 10_00023": {
+      "ver": "1.0.6",
+      "uuid": "dc874bec-f4e1-4b37-9c59-b8866c8886bc",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "e7dff7bc-03fe-4bcf-9361-eb42e3f3745e",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 410,
+      "height": 196,
+      "rawWidth": 410,
+      "rawHeight": 196,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

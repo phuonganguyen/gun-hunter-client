@@ -1,0 +1,130 @@
+{
+"skeleton": {
+	"hash": "HC3c2cayGeE",
+	"spine": "3.8-from-4.0.45",
+	"x": -89.51,
+	"y": 27.68,
+	"width": 274.95,
+	"height": 327.38,
+	"images": "./pig/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "than", "parent": "root", "length": 70.58, "rotation": 86.73, "x": -0.97, "y": 111.16 },
+	{ "name": "dau", "parent": "than", "length": 158.1, "rotation": 1.81, "x": 65.45, "y": -10.99 },
+	{ "name": "tay", "parent": "than", "length": 52.75, "rotation": 135.18, "x": 62.11, "y": -81.15 },
+	{ "name": "taytrai", "parent": "than", "length": 55.81, "rotation": -169.48, "x": 53.5, "y": 69.61 },
+	{ "name": "chanphai", "parent": "than", "length": 94.67, "rotation": -168.17, "x": 14.62, "y": -26.39 },
+	{ "name": "chantrai", "parent": "than", "length": 75.77, "rotation": 163.87, "x": -2.44, "y": 25.07 },
+	{ "name": "sung", "parent": "than", "length": 258.07, "rotation": -72.96, "x": -32.16, "y": 68.74 },
+	{ "name": "than3", "parent": "sung", "length": 69.69, "rotation": 87.06, "x": 62.62, "y": -23.63 },
+	{ "name": "co", "parent": "root", "length": 45.81, "rotation": -149.69, "x": 45.61, "y": 183.18 },
+	{ "name": "12", "parent": "co", "length": 45.28, "rotation": 118.99, "x": 68.28, "y": -39.92 }
+],
+"slots": [
+	{ "name": "than", "bone": "than", "attachment": "than" },
+	{ "name": "chanphai", "bone": "chanphai", "attachment": "chanphai" },
+	{ "name": "chantrai", "bone": "chantrai", "attachment": "chantrai" },
+	{ "name": "vongco", "bone": "12", "attachment": "vongco" },
+	{ "name": "head", "bone": "dau", "attachment": "head" },
+	{ "name": "mí mắt", "bone": "root" },
+	{ "name": "tayphai", "bone": "tay", "attachment": "tayphai" },
+	{ "name": "taytrai", "bone": "taytrai", "attachment": "taytrai" },
+	{ "name": "bàn tay cấm súng", "bone": "sung", "attachment": "bàn tay cấm súng" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"bàn tay cấm súng": {
+				"bàn tay cấm súng": { "x": 127.22, "y": -4.81, "rotation": -15.01, "width": 262, "height": 110 }
+			},
+			"chanphai": {
+				"chanphai": { "x": 44.91, "y": -20.13, "rotation": 80.2, "width": 109, "height": 96 }
+			},
+			"chantrai": {
+				"chantrai": { "x": 35.1, "y": 7.31, "rotation": 108.16, "width": 80, "height": 87 }
+			},
+			"head": {
+				"head": { "x": 86.48, "y": 2.52, "rotation": -89.78, "width": 202, "height": 181 }
+			},
+			"mí mắt": {
+				"mí mắt": { "x": 52.1, "y": 426.46, "rotation": -1.24, "width": 97, "height": 38 }
+			},
+			"tayphai": {
+				"tayphai": { "x": 20.94, "y": -8.01, "rotation": 136.85, "width": 58, "height": 67 }
+			},
+			"taytrai": {
+				"taytrai": { "x": 19.85, "y": 8.01, "rotation": 81.51, "width": 47, "height": 78 }
+			},
+			"than": {
+				"than": { "x": 42.1, "y": 10.04, "rotation": -87.97, "width": 130, "height": 72 }
+			},
+			"vongco": {
+				"vongco": { "x": 38.34, "y": 9.32, "rotation": 30.7, "width": 98, "height": 41 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"dau": {
+				"rotate": [
+					{},
+					{ "time": 0.6667, "angle": 3.07 },
+					{ "time": 1.3333 }
+				],
+				"translate": [
+					{ "x": -7.5 },
+					{ "time": 0.4, "x": -4.94, "y": -1.13 },
+					{ "time": 0.6, "x": -3.53, "y": -0.06 },
+					{ "time": 0.6667, "x": -3.35, "y": 0.14 },
+					{ "time": 1.3333, "x": -7.5 }
+				]
+			},
+			"12": {
+				"translate": [
+					{ "x": 4.61, "y": 7.88 },
+					{ "time": 0.6667, "x": 3.9, "y": 0.12 },
+					{ "time": 1.3333, "x": 4.61, "y": 7.88 }
+				]
+			},
+			"tay": {
+				"translate": [
+					{ "x": -7.81, "y": 0.66 },
+					{ "time": 0.6667, "x": -1.36, "y": 4.37 },
+					{ "time": 1.3333, "x": -7.81, "y": 0.66 }
+				]
+			},
+			"taytrai": {
+				"translate": [
+					{ "x": -6.71, "y": 0.73 },
+					{ "time": 0.6667, "x": -3.7, "y": 6.45 },
+					{ "time": 1.3333, "x": -6.71, "y": 0.73 }
+				]
+			},
+			"sung": {
+				"translate": [
+					{ "x": -8.92, "y": 0.6 },
+					{ "time": 0.6667, "x": 1.77, "y": 7.88 },
+					{ "time": 1.3333, "x": -8.92, "y": 0.6 }
+				]
+			},
+			"co": {
+				"translate": [
+					{ "x": 2.22, "y": -2.22 }
+				]
+			},
+			"chanphai": {
+				"translate": [
+					{},
+					{ "time": 0.6667, "x": 5.47, "y": 1.42 },
+					{ "time": 1.3333 }
+				]
+			}
+		}
+	}
+}
+}
