@@ -30,7 +30,7 @@ export default class Hero extends cc.Component {
         this.heroName.string = data.name;
         this.battle.string = data.battle;
         this.like.string = data.likes;
-        this.win.string = `${(parseInt(data.win) * 100) / parseInt(data.battle)}%`;
+        this.win.string = `${data.battle ? (data.win * 100) / data.battle : 0}%`;
         this.power.string = data.percents[0];
         this.vitality.string = data.percents[1];
         this.defense.string = data.percents[2];

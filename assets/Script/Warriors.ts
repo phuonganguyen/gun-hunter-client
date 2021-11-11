@@ -10,8 +10,17 @@ export default class Warriors extends cc.Component {
     private selectedIndex = 0;
     private heroes = [];
 
-    @property(Hero)
-    hero: Hero = null;
+    @property(cc.Label)
+    nft_id: cc.Label = null;
+
+    @property(cc.Label)
+    turn: cc.Label = null;
+
+    @property(cc.Node)
+    noHero: cc.Node = null;
+
+    @property(cc.Node)
+    hero: cc.Node = null;
 
     constructor() {
         super();
@@ -20,11 +29,20 @@ export default class Warriors extends cc.Component {
 
     async onLoad() {
         this.heroes = await this.backendService.getHeroes();
-        this.loadHero(this.selectedIndex);
+        if (this.heroes && this.heroes.length) {
+            this.loadHero(this.selectedIndex);
+        } else {
+            this.noHero.active = true;
+        }
     }
 
     loadHero(heroIndex: number) {
-        this.hero.setData(this.heroes[heroIndex]);
+        const data = this.heroes[heroIndex];
+        const hero = this.hero.getComponent(Hero);
+        hero.setData(data);
+        this.nft_id.string = `${data.nft_id}`;
+        this.turn.string = `${data.total_turn - data.used_turn}/${data.total_turn}`;
+        this.hero.active = true;
     }
 
     next() {
@@ -48,5 +66,9 @@ export default class Warriors extends cc.Component {
 
     back() {
         cc.director.loadScene('lobby');
+    }
+
+    goToMarket() {
+        cc.director.loadScene('marketplace');
     }
 }
