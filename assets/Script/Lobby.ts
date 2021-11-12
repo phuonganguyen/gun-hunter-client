@@ -1,5 +1,4 @@
 import AccountManager from "./common/AccountManager";
-import NumberHelper from "./common/helpers/NumberHelper";
 import Hero from "./components/Hero";
 import BackendService from "./services/BackendService";
 
@@ -30,7 +29,11 @@ export default class Lobby extends cc.Component {
     @property(cc.Node)
     hero: cc.Node = null;
 
+    @property(cc.Node)
+    loading: cc.Node = null;
+
     onLoad() {
+        this.loading.active = true;
         this.accountManager.login();
         this.accountManager.signedInCallback = this.signedIn.bind(this);
     }
@@ -54,7 +57,7 @@ export default class Lobby extends cc.Component {
         this.accountManager.setContract(contract);
         await this.accountManager.initContract(contract);
         const balance = await this.accountManager.updateBalance();
-        this.balance.string = NumberHelper.roundNumber(parseFloat(balance), 4) + '';
+        this.balance.string = `${balance}`;
         const hero = await this.backendService.getOwnerRecords();
         if (hero) {
             this.noHero.active = false;
@@ -65,6 +68,8 @@ export default class Lobby extends cc.Component {
             this.noHero.active = true;
             this.hero.active = false;
         }
+
+        this.loading.active = false;
     }
 
     loadAvatar(avatarId: number) {

@@ -136,7 +136,7 @@ export default class MarketPlace extends cc.Component {
                 cc.tween(hero)
                     .to(0.2, {
                         scale: 1.15,
-                        position: cc.v2(hero.position.x, 12),
+                        position: cc.v3(hero.position.x, 12),
                     })
                     .start();
             } else {
@@ -145,7 +145,7 @@ export default class MarketPlace extends cc.Component {
                 cc.tween(hero)
                     .to(0.2, {
                         scale: 1,
-                        position: cc.v2(hero.position.x, 0),
+                        position: cc.v3(hero.position.x, 0),
                     })
                     .start();
             }
@@ -173,7 +173,7 @@ export default class MarketPlace extends cc.Component {
         this.selectedHero = heroInfo;
         console.log(this.selectedHero);
         this.heroName.string = heroInfo.name;
-        this.heroPrice.string = heroInfo.price.toString();
+        this.heroPrice.string = heroInfo.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' GHT';
         heroInfo.percents.forEach((value, index) => {
             this.powers[index].string = value.toString();
         });

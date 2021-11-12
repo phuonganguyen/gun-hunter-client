@@ -63,6 +63,7 @@ export default class BackendService {
     }
 
     async getOwnerRecords() {
+        console.log('getOwnerRecords');
         const response = await axios.get(`${this.baseAPIUri}/owner/records`, this.buildHeaderRequest());
 
         return response.data;
