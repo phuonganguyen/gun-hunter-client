@@ -5279,7 +5279,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 222.77,
+      "width": 225,
       "height": 44.1
     },
     "_anchorPoint": {
@@ -5331,8 +5331,8 @@
     ],
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_string": "Dakota Fray",
-    "_N$string": "Dakota Fray",
+    "_string": "",
+    "_N$string": "",
     "_fontSize": 35,
     "_lineHeight": 35,
     "_enableWrapText": true,
@@ -5347,7 +5347,7 @@
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 0,
+    "_N$overflow": 2,
     "_N$cacheMode": 0,
     "_id": "d3nvQakoVMeJ94XKOcWv1w"
   },
