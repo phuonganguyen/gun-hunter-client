@@ -70,7 +70,7 @@ export default class Lobby extends cc.Component {
     loadAvatar(avatarId: number) {
         console.log(avatarId);
         const self = this;
-        cc.resources.load(`avatars/avt${avatarId}`, cc.SpriteFrame, function (err, spriteFrame) {
+        cc.resources.load(`avatars/avt${avatarId}`, cc.SpriteFrame, function (err, spriteFrame: cc.SpriteFrame) {
             self.avatar.spriteFrame = spriteFrame;
         });
     }

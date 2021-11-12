@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "c9f20c75-2f48-4af7-8a98-4ccf00d69cf1",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 2002,
+  "height": 1130,
+  "platformSettings": {},
+  "subMetas": {
+    "Ảnh chụp Màn hình 2021-11-10 lúc 16.25.10": {
+      "ver": "1.0.6",
+      "uuid": "b67d8394-e374-4bfe-8712-634598ad13a7",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "c9f20c75-2f48-4af7-8a98-4ccf00d69cf1",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 2002,
+      "height": 1130,
+      "rawWidth": 2002,
+      "rawHeight": 1130,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import AccountManager from "./common/AccountManager";
+import BuyHeroSuccess from "./components/BuyHeroSuccess";
 import SnappedScrollView from "./controls/SnappedScrollView";
 import BackendService, { Hero } from "./services/BackendService";
 
@@ -39,6 +40,12 @@ export default class MarketPlace extends cc.Component {
 
     @property([cc.Label])
     powers: cc.Label[] = [];
+
+    @property(cc.Node)
+    dialog: cc.Node = null;
+
+    @property(BuyHeroSuccess)
+    buyHeroSuccess: BuyHeroSuccess = null;
 
     public onChanged: OnChangedBet = (bet) => {};
 
@@ -174,6 +181,12 @@ export default class MarketPlace extends cc.Component {
 
     async onBuyHero() {
         const txHash = await this.accountManager.transferCoin(this.selectedHero.price);
-        await this.backendService.buyHero(this.selectedHero.id, txHash);
+        const data = await this.backendService.buyHero(this.selectedHero.id, txHash);
+        this.buyHeroSuccess.setData(data);
+        this.dialog.active = true;
+    }
+
+    closeDialog() {
+        this.dialog.active = false;
     }
 }
