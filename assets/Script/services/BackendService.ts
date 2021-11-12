@@ -69,8 +69,14 @@ export default class BackendService {
         return response.data;
     }
 
-    async getHeroes() {
+    async getOwnerHeroes() {
         const response = await axios.get(`${this.baseAPIUri}/owner/heroes`, this.buildHeaderRequest());
+
+        return response.data;
+    }
+
+    async getHeroes() {
+        const response = await axios.get(`${this.baseAPIUri}/heroes`, this.buildHeaderRequest());
 
         return response.data;
     }
