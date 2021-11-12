@@ -44,6 +44,9 @@ export default class MarketPlace extends cc.Component {
     @property(cc.Node)
     dialog: cc.Node = null;
 
+    @property(cc.Node)
+    loading: cc.Node = null;
+
     @property(BuyHeroSuccess)
     buyHeroSuccess: BuyHeroSuccess = null;
 
@@ -53,6 +56,7 @@ export default class MarketPlace extends cc.Component {
     private selectedHero: Hero;
 
     onLoad() {
+        this.loading.active = true;
         this.leftButton.active = false;
         this.heroList = [...this.heros.children];
         this.snappedScrollView.onScrollEnded = () => {
@@ -69,6 +73,7 @@ export default class MarketPlace extends cc.Component {
             this.updateSelectedHeroValue();
         };
         this.setCurrentHero('1');
+        this.loading.active = false;
     }
 
     onEnable() {
@@ -83,13 +88,17 @@ export default class MarketPlace extends cc.Component {
     }
 
     public onPrevious() {
+        this.loading.active = true;
         this.selectedIndex -= 1;
         this.scrollToSelectedIndex();
+        this.loading.active = false;
     }
 
     public onNext() {
+        this.loading.active = true;
         this.selectedIndex += 1;
         this.scrollToSelectedIndex();
+        this.loading.active = false;
     }
 
     public onBack() {
@@ -122,7 +131,6 @@ export default class MarketPlace extends cc.Component {
     }
 
     updateSelectedHeroValue() {
-        console.log('updateSelectedChipValue');
         const item = this.heroList[this.selectedIndex].name;
         this.setCurrentHero(item);
     }
@@ -153,7 +161,7 @@ export default class MarketPlace extends cc.Component {
     }
 
     public onHeroClick(event) {
-        console.log('onHeroClick');
+        this.loading.active = true;
         const hero = event.target.name;
         console.log(hero);
 
@@ -165,6 +173,7 @@ export default class MarketPlace extends cc.Component {
         }
         this.selectedIndex = i;
         this.scrollToSelectedIndex();
+        this.loading.active = false;
     }
 
     async setCurrentHero(hero: string) {
@@ -180,9 +189,11 @@ export default class MarketPlace extends cc.Component {
     }
 
     async onBuyHero() {
+        this.loading.active = true;
         const txHash = await this.accountManager.transferCoin(this.selectedHero.price);
         const data = await this.backendService.buyHero(this.selectedHero.id, txHash);
-        this.buyHeroSuccess.setData(data);
+        this.buyHeroSuccess.setData(data, this.selectedHero.name);
+        this.loading.active = false;
         this.dialog.active = true;
     }
 
