@@ -28,6 +28,12 @@ export default class Warriors extends cc.Component {
     @property(cc.Node)
     loading: cc.Node = null;
 
+    @property(cc.Node)
+    btnNext: cc.Node = null;
+
+    @property(cc.Node)
+    btnPrev: cc.Node = null;
+
     private countDown: number;
 
     constructor() {
@@ -36,6 +42,7 @@ export default class Warriors extends cc.Component {
     }
 
     async onLoad() {
+        this.btnPrev.active = false;
         this.loading.active = true;
         this.heroes = await this.backendService.getHeroes();
         if (this.heroes && this.heroes.length) {
@@ -51,7 +58,7 @@ export default class Warriors extends cc.Component {
         const hero = this.hero.getComponent(Hero);
         hero.setData(data);
         this.nft_id.string = `ID: ${data.nft_id}`;
-        this.turn.string = `${data.total_turn - data.used_turn}/${data.total_turn}`;
+        this.turn.string = `${data.used_turn}/${data.total_turn}`;
         const countDownDate = data.last_turn + 3600000;
         this.countDown && clearInterval(this.countDown);
         this.countDown = setInterval(() => {
@@ -73,24 +80,19 @@ export default class Warriors extends cc.Component {
 
     next() {
         this.loading.active = true;
-        if (this.selectedIndex === this.heroes.length - 1) {
-            this.selectedIndex = 0;
-        } else {
-            this.selectedIndex++;
-        }
-
+        this.selectedIndex++;
         this.loadHero(this.selectedIndex);
+        this.btnNext.active = this.selectedIndex !== this.heroes.length - 1;
+        this.btnPrev.active = this.selectedIndex !== 0;
         this.loading.active = false;
     }
 
     prev() {
         this.loading.active = true;
-        if (this.selectedIndex === 0) {
-            this.selectedIndex = this.heroes.length - 1;
-        } else {
-            this.selectedIndex--;
-        }
+        this.selectedIndex--;
         this.loadHero(this.selectedIndex);
+        this.btnNext.active = this.selectedIndex !== this.heroes.length - 1;
+        this.btnPrev.active = this.selectedIndex !== 0;
         this.loading.active = false;
     }
 
@@ -100,5 +102,9 @@ export default class Warriors extends cc.Component {
 
     goToMarket() {
         cc.director.loadScene('marketplace');
+    }
+
+    onDestroy() {
+        this.countDown && clearInterval(this.countDown);
     }
 }

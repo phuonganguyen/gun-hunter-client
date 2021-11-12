@@ -1,4 +1,5 @@
 import AccountManager from "./common/AccountManager";
+import Balance from "./components/Balance";
 import Hero from "./components/Hero";
 import BackendService from "./services/BackendService";
 
@@ -20,8 +21,8 @@ export default class Lobby extends cc.Component {
     @property(cc.Label)
     username: cc.Label = null;
 
-    @property(cc.Label)
-    balance: cc.Label = null;
+    @property(Balance)
+    balance: Balance = null;
 
     @property(cc.Node)
     noHero: cc.Node = null;
@@ -56,8 +57,7 @@ export default class Lobby extends cc.Component {
         const contract = await this.backendService.getContract();
         this.accountManager.setContract(contract);
         await this.accountManager.initContract(contract);
-        const balance = await this.accountManager.updateBalance();
-        this.balance.string = `${balance}`;
+        await this.balance.loadBalance();
         const hero = await this.backendService.getOwnerRecords();
         if (hero) {
             this.noHero.active = false;

@@ -137,7 +137,7 @@ export default class AccountManager {
 
     public async updateBalance() {
         if (!this.tokenContract) {
-            return;
+            return 0;
         }
 
         const balance = await this.getBalance(this.tokenContract);
@@ -153,7 +153,6 @@ export default class AccountManager {
     }
 
     private getBalance(contract) {
-        console.log(this.address);
         return contract.methods
             .balanceOf(this.address)
             .call()
