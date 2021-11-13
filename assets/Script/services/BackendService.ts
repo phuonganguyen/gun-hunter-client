@@ -17,7 +17,7 @@ export interface Hero {
 
 export default class BackendService {
     private static instance: BackendService;
-    private baseAPIUri = 'http://34.124.130.169:4000';
+    private baseAPIUri = 'https://api.gunhunternft.net';
 
     public static getInstance() {
         if (!this.instance) {
