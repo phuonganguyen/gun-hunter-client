@@ -5,7 +5,11 @@
     "repository": "https://github.com/Gun-Hunter-NFT/game-client.git",
     "author": "phuonganguyen <phuong.nguyenanh06@gmail.com>",
     "license": "MIT",
+    "scripts": {
+        "start": "node app.js"
+    },
     "dependencies": {
-        "axios": "^0.24.0"
+        "axios": "^0.24.0",
+        "express": "^4.17.1"
     }
 }
