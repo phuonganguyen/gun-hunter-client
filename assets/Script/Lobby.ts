@@ -80,6 +80,10 @@ export default class Lobby extends cc.Component {
         });
     }
 
+    onPlayToEarnClick() {
+        cc.director.loadScene('playtoearn');
+    }
+
     startUpdateBalance() {
         AccountManager.getInstance().setUpdateBalanceCallBack((tokenBalance, gameBalance) => {
             this.updateBalance(tokenBalance, gameBalance);

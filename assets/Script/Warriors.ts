@@ -54,6 +54,10 @@ export default class Warriors extends cc.Component {
         this.loading.active = false;
     }
 
+    onPlayToEarnClick() {
+        cc.director.loadScene('playtoearn');
+    }
+
     loadHero(heroIndex: number) {
         const data = this.heroes[heroIndex];
         const hero = this.hero.getComponent(Hero);

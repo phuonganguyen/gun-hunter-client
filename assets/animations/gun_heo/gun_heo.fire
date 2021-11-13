@@ -58,7 +58,7 @@
     "_groupIndex": 0,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "fan6s46Y5AAKLcvi+6jrau"
+    "_id": "eb9b99ea-b2a2-4c4f-a1c1-95b5c29f40cf"
   },
   {
     "__type__": "cc.Node",
@@ -335,13 +335,15 @@
       "__id__": 5
     },
     "_enabled": true,
-    "_defaultClip": null,
+    "_defaultClip": {
+      "__uuid__": "6e0a1d01-fc7c-42e8-8a9b-e6b8ea15081c"
+    },
     "_clips": [
       {
         "__uuid__": "6e0a1d01-fc7c-42e8-8a9b-e6b8ea15081c"
       }
     ],
-    "playOnLoad": false,
+    "playOnLoad": true,
     "_id": "6dWBseK6FF1Y13t6ggJ8Hq"
   },
   {
