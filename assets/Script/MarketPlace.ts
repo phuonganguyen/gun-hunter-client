@@ -53,7 +53,7 @@ export default class MarketPlace extends cc.Component {
     async onLoad() {
         this.loading.active = true;
         this.heroList = await this.backendService.getHeroes();
-        this.selectedHero = this.heroList[0];
+        this.selectedHero = this.heroList[1];
         this.loadHeroes();
         this.setCurrentHero();
         this.loading.active = false;
@@ -109,7 +109,7 @@ export default class MarketPlace extends cc.Component {
     }
 
     async setCurrentHero() {
-        const currentHero = this.heroList[0];
+        const currentHero = this.heroList[1];
         const heroInfo = await this.backendService.getHero(currentHero.id);
         this.selectedHero = heroInfo;
         this.heroName.string = heroInfo.name;

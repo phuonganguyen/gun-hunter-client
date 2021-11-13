@@ -3375,7 +3375,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "1",
+    "_name": "0",
     "_objFlags": 0,
     "_parent": {
       "__id__": 75
@@ -3925,7 +3925,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "0",
+    "_name": "1",
     "_objFlags": 0,
     "_parent": {
       "__id__": 75
