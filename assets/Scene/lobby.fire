@@ -4658,7 +4658,7 @@
       "__id__": 115
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 117
@@ -4694,8 +4694,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        0.8,
+        0.8,
         1
       ]
     },
@@ -4798,8 +4798,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        0.8,
+        0.8,
         1
       ]
     },
@@ -4902,8 +4902,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        0.8,
+        0.8,
         1
       ]
     },
@@ -5006,8 +5006,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        0.8,
+        0.8,
         1
       ]
     },
@@ -5333,7 +5333,7 @@
     "_dstBlendFactor": 771,
     "_string": "",
     "_N$string": "",
-    "_fontSize": 35,
+    "_fontSize": 26,
     "_lineHeight": 35,
     "_enableWrapText": true,
     "_N$file": {
@@ -5376,7 +5376,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 125.98,
+      "width": 109.18,
       "height": 37.8
     },
     "_anchorPoint": {
@@ -5430,7 +5430,7 @@
     "_dstBlendFactor": 771,
     "_string": "MARKET",
     "_N$string": "MARKET",
-    "_fontSize": 30,
+    "_fontSize": 26,
     "_lineHeight": 30,
     "_enableWrapText": true,
     "_N$file": {
