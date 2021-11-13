@@ -1,1 +1,0 @@
-window._CCSettings={platform:"web-mobile",groupList:["default"],collisionMatrix:[[true]],hasResourcesBundle:true,hasStartSceneBundle:false,remoteBundles:[],subpackages:[],launchScene:"db://assets/Scene/splash.fire",orientation:"",jsList:[],bundleVers:{internal:"4aef9",resources:"6829e",main:"86305"}};

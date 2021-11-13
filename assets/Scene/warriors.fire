@@ -3036,8 +3036,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 25.78,
-      "height": 27.72
+      "width": 28.13,
+      "height": 30.24
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -3090,8 +3090,8 @@
     "_dstBlendFactor": 771,
     "_string": "ID:",
     "_N$string": "ID:",
-    "_fontSize": 22,
-    "_lineHeight": 22,
+    "_fontSize": 24,
+    "_lineHeight": 24,
     "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "1e92cd1b-866c-4ae3-a7c5-1712677d46aa"

@@ -1,6 +1,5 @@
 import Moralis from "../../libs/moralis.min.js";
 import Web3 from "../../libs/web3.min.js";
-import GameService from "./GameService";
 import HandleTransactionResponse from "./HandleTransactionResponse";
 
 // import GameService from "./GameService";
@@ -95,15 +94,11 @@ export default class AccountManager {
     }
 
     private initAccount() {
-        console.log('initAccount');
-        // Moralis.start({ serverUrl: this.serverUrl, appId: this.appId });
-        // this.user = await Moralis.authenticate();
         this.web3.eth.getAccounts().then((accounts) => {
             if (accounts.length > 0) {
                 this.address = accounts[0].toLowerCase();
 
                 this.signedInCallback();
-                GameService.getInstance().joinLobby(this.address, this.signedIn.bind(this));
             } else {
                 console.log('YOU MUST ENABLE AND LOGIN INTO YOUR WALLET OR METAMASK ACCOUNTS!');
             }
