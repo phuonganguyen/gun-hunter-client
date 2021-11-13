@@ -49,6 +49,7 @@ export default class Warriors extends cc.Component {
             this.loadHero(this.selectedIndex);
         } else {
             this.noHero.active = true;
+            this.btnNext.active = false;
         }
         this.loading.active = false;
     }

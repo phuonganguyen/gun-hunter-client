@@ -92,22 +92,6 @@ export default class MarketPlace extends cc.Component {
         cc.director.loadScene('lobby');
     }
 
-    public onHeroClick(event) {
-        this.loading.active = true;
-        const hero = event.target.name;
-        console.log(hero);
-
-        let i = 0;
-        for (; i < this.heroList.length; i++) {
-            if (this.heroList[i].name === hero) {
-                break;
-            }
-        }
-        this.selectedIndex = i;
-
-        this.loading.active = false;
-    }
-
     async setCurrentHero() {
         const currentHero = this.heroList[1];
         const heroInfo = await this.backendService.getHero(currentHero.id);
