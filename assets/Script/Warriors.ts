@@ -43,13 +43,14 @@ export default class Warriors extends cc.Component {
 
     async onLoad() {
         this.btnPrev.active = false;
+        this.btnNext.active = false;
         this.loading.active = true;
         this.heroes = await this.backendService.getOwnerHeroes();
         if (this.heroes && this.heroes.length) {
             this.loadHero(this.selectedIndex);
+            this.btnNext.active == this.heroes.length > 1;
         } else {
             this.noHero.active = true;
-            this.btnNext.active = false;
         }
         this.loading.active = false;
     }
