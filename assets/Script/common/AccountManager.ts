@@ -1,4 +1,3 @@
-import Moralis from "../../libs/moralis.min.js";
 import Web3 from "../../libs/web3.min.js";
 import HandleTransactionResponse from "./HandleTransactionResponse";
 
@@ -17,10 +16,6 @@ export interface RoomType {
 }
 
 export default class AccountManager {
-    /* Moralis init code */
-    private readonly serverUrl = 'https://kdlpb0cvts4u.usemoralis.com:2053/server';
-    private readonly appId = 'sDLLuGfjkVhHPDq3LbVEi31FvVGnHxTfYKV6CSzo';
-
     public static getInstance(): AccountManager {
         if (!this.instance) {
             this.instance = new AccountManager();
@@ -256,17 +251,5 @@ export default class AccountManager {
         });
 
         return txHash;
-    }
-
-    async heroNFT() {
-        const options = { chain: 'bsc testnet', address: this.user.get('ethAddress') };
-
-        const userEthNFTs = await Moralis.Web3.getNFTs(options);
-
-        const data = userEthNFTs.filter(
-            (item) => item?.token_address?.toLowerCase() === this.contract.nft?.contract_address?.toLowerCase()
-        );
-
-        return data;
     }
 }

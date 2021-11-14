@@ -4,7 +4,7 @@ export default class RoomService {
     private static _instance: RoomService;
 
     private readonly client: Colyseus.Client;
-    private readonly GAME_SERVER_URI = 'wss://gun-hunter-service.herokuapp.com/';
+    private readonly GAME_SERVER_URI = 'wss://gun-hunter-service.herokuapp.com';
     private readonly ROOM_NAME = 'battle_room';
 
     private room: Colyseus.Room;
@@ -21,7 +21,18 @@ export default class RoomService {
         return this._instance;
     }
 
-    async joinRoom(heroId: number) {
-        this.room = await this.client.joinOrCreate(this.ROOM_NAME);
+    getRoom() {
+        return this.room;
+    }
+
+    async joinRoom(nft_id: number) {
+        try {
+            const access_token = localStorage.getItem('token');
+            this.room = await this.client.joinOrCreate(this.ROOM_NAME, { access_token, nft_id });
+            return true;
+        } catch (ex) {
+            console.log(ex);
+            return false;
+        }
     }
 }

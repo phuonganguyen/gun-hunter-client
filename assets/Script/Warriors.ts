@@ -1,11 +1,13 @@
 import Hero from "./components/Hero";
 import BackendService from "./services/BackendService";
+import RoomService from "./services/RoomService";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Warriors extends cc.Component {
     private readonly backendService: BackendService;
+    private readonly roomService: RoomService;
 
     private selectedIndex = 0;
     private heroes = [];
@@ -39,6 +41,7 @@ export default class Warriors extends cc.Component {
     constructor() {
         super();
         this.backendService = BackendService.getInstance();
+        this.roomService = RoomService.getInstance();
     }
 
     async onLoad() {
@@ -48,15 +51,18 @@ export default class Warriors extends cc.Component {
         this.heroes = await this.backendService.getOwnerHeroes();
         if (this.heroes && this.heroes.length) {
             this.loadHero(this.selectedIndex);
-            this.btnNext.active == this.heroes.length > 1;
+            this.btnNext.active = this.heroes.length > 1;
         } else {
             this.noHero.active = true;
         }
         this.loading.active = false;
     }
 
-    onPlayToEarnClick() {
-        cc.director.loadScene('playtoearn');
+    async onPlayToEarnClick() {
+        const hero = this.heroes[this.selectedIndex];
+        if (await this.roomService.joinRoom(hero.nft_id)) {
+            cc.director.loadScene('playtoearn');
+        }
     }
 
     loadHero(heroIndex: number) {

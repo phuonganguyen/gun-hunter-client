@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "23133b65-626d-49d7-abcc-223e36766c4b",
+  "uuid": "e94a2137-6ad4-4865-9291-dbaaacd0503a",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -14,9 +14,9 @@
   "subMetas": {
     "Muzzle Flash 02_00007": {
       "ver": "1.0.6",
-      "uuid": "fb0c8d4c-61bf-46be-ae45-a86b8b6e7a4b",
+      "uuid": "7115c291-24c4-4175-b688-ab4b2d7356e9",
       "importer": "sprite-frame",
-      "rawTextureUuid": "23133b65-626d-49d7-abcc-223e36766c4b",
+      "rawTextureUuid": "e94a2137-6ad4-4865-9291-dbaaacd0503a",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
