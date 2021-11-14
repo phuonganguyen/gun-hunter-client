@@ -59,6 +59,7 @@ export default class Warriors extends cc.Component {
     }
 
     async onPlayToEarnClick() {
+        this.loading.active = true;
         const hero = this.heroes[this.selectedIndex];
         if (await this.roomService.joinRoom(hero.nft_id)) {
             cc.director.loadScene('playtoearn');
