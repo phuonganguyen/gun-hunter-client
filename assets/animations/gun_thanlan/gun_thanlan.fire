@@ -58,7 +58,7 @@
     "_groupIndex": 0,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "89XX8BwzFJy5p0viOmYIDg"
+    "_id": "e4e02328-1611-4dbf-b251-ab5651dd4d39"
   },
   {
     "__type__": "cc.Node",
@@ -300,10 +300,12 @@
       "__id__": 4
     },
     "_enabled": true,
-    "_defaultClip": null,
+    "_defaultClip": {
+      "__uuid__": "f36bc51a-598c-4168-8dcc-e79af5d9f4c8"
+    },
     "_clips": [
       {
-        "__uuid__": "f96496d6-64fa-4d6c-b5b2-e3bc861a4609"
+        "__uuid__": "f36bc51a-598c-4168-8dcc-e79af5d9f4c8"
       }
     ],
     "playOnLoad": false,

@@ -8,7 +8,7 @@
   },
   "packageName": "org.cocos2d.helloworld",
   "startScene": "a0e72098-0f25-4ad7-927d-23eeded02d00",
-  "title": "hello_world",
+  "title": "Gun_Hunter_NFT",
   "webOrientation": "auto",
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,

@@ -88,6 +88,9 @@
       },
       {
         "__id__": 19
+      },
+      {
+        "__id__": 20
       }
     ],
     "_prefab": null,
@@ -851,5 +854,17 @@
     "_originalWidth": 0,
     "_originalHeight": 0,
     "_id": "29zXboiXFBKoIV4PQ2liTe"
+  },
+  {
+    "__type__": "226c0LaEi9Omowibs8d+Zr6",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "label": null,
+    "text": "hello",
+    "_id": "ceL24D0I5IAo5mLQCMjbQI"
   }
 ]
