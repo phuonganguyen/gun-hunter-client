@@ -50,33 +50,35 @@ export default class AccountManager {
         this.contract = contract;
     }
 
-    login() {
-        const isWeb3Enabled = () => !!this.window.web3;
-        if (isWeb3Enabled()) {
-            this.web3 = new Web3();
+    async login() {
+        try {
+            const isWeb3Enabled = () => !!this.window.web3;
+            if (isWeb3Enabled()) {
+                this.web3 = new Web3();
 
-            AccountManager.utils = this.web3.utils;
+                AccountManager.utils = this.web3.utils;
 
-            //Request account access for modern dapp browsers
-            if (this.window.ethereum) {
-                this.web3.setProvider(this.window.ethereum);
-                this.window.ethereum
-                    .enable()
-                    .then((accounts) => {
+                //Request account access for modern dapp browsers
+                if (this.window.ethereum) {
+                    this.web3.setProvider(this.window.ethereum);
+                    await this.window.ethereum.enable();
+                    this.initAccount();
+                    this.window.ethereum.on('accountsChanged', async (accounts) => {
+                        console.log('Change account', accounts[0]);
                         this.initAccount();
-                    })
-                    .catch((error) => {
-                        console.error(error);
                     });
-            }
-            //Request account access for legacy dapp browsers
-            else if (this.window.web3) {
-                this.web3.setProvider(this.window.web3.currentProvider);
+                }
+                //Request account access for legacy dapp browsers
+                else if (this.window.web3) {
+                    this.web3.setProvider(this.window.web3.currentProvider);
 
-                this.initAccount();
+                    this.initAccount();
+                }
+            } else {
+                console.log('YOU MUST ENABLE AND LOGIN INTO YOUR WALLET OR METAMASK ACCOUNTS!');
             }
-        } else {
-            console.log('YOU MUST ENABLE AND LOGIN INTO YOUR WALLET OR METAMASK ACCOUNTS!');
+        } catch (ex) {
+            console.error(ex);
         }
     }
 

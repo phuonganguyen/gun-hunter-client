@@ -33,9 +33,9 @@ export default class Lobby extends cc.Component {
     @property(cc.Node)
     loading: cc.Node = null;
 
-    onLoad() {
+    async onLoad() {
         this.loading.active = true;
-        this.accountManager.login();
+        await this.accountManager.login();
         this.accountManager.signedInCallback = this.signedIn.bind(this);
     }
 
