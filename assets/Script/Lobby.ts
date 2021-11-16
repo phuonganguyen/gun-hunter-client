@@ -3,6 +3,12 @@ import Balance from "./components/Balance";
 import Hero from "./components/Hero";
 import BackendService from "./services/BackendService";
 
+declare global {
+    interface Window {
+        authData: any;
+    }
+}
+
 const { ccclass, property } = cc._decorator;
 @ccclass
 export default class Lobby extends cc.Component {
@@ -33,10 +39,22 @@ export default class Lobby extends cc.Component {
     @property(cc.Node)
     loading: cc.Node = null;
 
+    @property(cc.Node)
+    signed: cc.Node = null;
+
+    @property(cc.Node)
+    login: cc.Node = null;
+
     async onLoad() {
         this.loading.active = true;
-        await this.accountManager.login();
-        this.accountManager.signedInCallback = this.signedIn.bind(this);
+        if (this.accountManager.isLoggedIn) {
+            await this.loadUserInfo();
+        } else {
+            this.signed.active = false;
+            this.login.active = true;
+        }
+
+        this.loading.active = false;
     }
 
     marketPlace() {
@@ -47,16 +65,29 @@ export default class Lobby extends cc.Component {
         cc.director.loadScene('warriors');
     }
 
+    async onLoginClick() {
+        this.loading.active = true;
+        await this.accountManager.login();
+        this.accountManager.signedInCallback = this.signedIn.bind(this);
+    }
+
     private async signedIn() {
         const address = this.accountManager.getAddress();
         const authData = await this.backendService.auth(address);
-        console.log(authData);
-        this.username.string = authData.username;
-        this.loadAvatar(authData.avatar_id);
         localStorage.setItem('token', authData.access_token);
+        window.authData = authData;
         const contract = await this.backendService.getContract();
         this.accountManager.setContract(contract);
         await this.accountManager.initContract(contract);
+        await this.loadUserInfo();
+        this.loading.active = false;
+    }
+
+    async loadUserInfo() {
+        const authData = window.authData;
+        this.username.string = authData.username;
+        this.loadAvatar(authData.avatar_id);
+
         await this.balance.loadBalance();
         const hero = await this.backendService.getOwnerRecords();
         if (hero) {
@@ -68,8 +99,8 @@ export default class Lobby extends cc.Component {
             this.noHero.active = true;
             this.hero.active = false;
         }
-
-        this.loading.active = false;
+        this.signed.active = true;
+        this.login.active = false;
     }
 
     loadAvatar(avatarId: number) {

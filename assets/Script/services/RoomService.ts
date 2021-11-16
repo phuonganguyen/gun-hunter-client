@@ -25,6 +25,10 @@ export default class RoomService {
         return this.room;
     }
 
+    getClient() {
+        return this.client;
+    }
+
     async joinRoom(nft_id: number) {
         try {
             const access_token = localStorage.getItem('token');

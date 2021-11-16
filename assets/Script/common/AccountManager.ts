@@ -51,9 +51,11 @@ export default class AccountManager {
     }
 
     async login() {
+        console.log('login');
         try {
             const isWeb3Enabled = () => !!this.window.web3;
             if (isWeb3Enabled()) {
+                console.log('isWeb3Enabled');
                 this.web3 = new Web3();
 
                 AccountManager.utils = this.web3.utils;
@@ -61,18 +63,19 @@ export default class AccountManager {
                 //Request account access for modern dapp browsers
                 if (this.window.ethereum) {
                     this.web3.setProvider(this.window.ethereum);
-                    await this.window.ethereum.enable();
-                    this.initAccount();
+                    const accounts = await this.window.ethereum.request({ method: 'eth_requestAccounts' });
+                    this.initAccount(accounts[0]);
                     this.window.ethereum.on('accountsChanged', async (accounts) => {
-                        console.log('Change account', accounts[0]);
-                        this.initAccount();
+                        this.initAccount(accounts[0]);
                     });
                 }
                 //Request account access for legacy dapp browsers
                 else if (this.window.web3) {
                     this.web3.setProvider(this.window.web3.currentProvider);
-
-                    this.initAccount();
+                    const accounts = await this.web3.eth.getAccounts();
+                    this.initAccount(accounts[0]);
+                } else {
+                    console.log('else');
                 }
             } else {
                 console.log('YOU MUST ENABLE AND LOGIN INTO YOUR WALLET OR METAMASK ACCOUNTS!');
@@ -90,10 +93,12 @@ export default class AccountManager {
         return this.account !== null;
     }
 
-    private initAccount() {
+    private initAccount(account) {
+        console.log('initAccount');
         this.web3.eth.getAccounts().then((accounts) => {
             if (accounts.length > 0) {
                 this.address = accounts[0].toLowerCase();
+                this.isLoggedIn = true;
 
                 this.signedInCallback();
             } else {
