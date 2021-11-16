@@ -50,11 +50,14 @@ export default class AccountManager {
         this.contract = contract;
     }
 
+    isWeb3Enabled() {
+        return !!this.window.web3;
+    }
+
     async login() {
         console.log('login');
         try {
-            const isWeb3Enabled = () => !!this.window.web3;
-            if (isWeb3Enabled()) {
+            if (this.isWeb3Enabled()) {
                 console.log('isWeb3Enabled');
                 this.web3 = new Web3();
 

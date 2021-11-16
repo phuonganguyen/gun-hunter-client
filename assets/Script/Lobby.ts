@@ -1,6 +1,7 @@
 import AccountManager from "./common/AccountManager";
 import Balance from "./components/Balance";
 import Hero from "./components/Hero";
+import Notice from "./components/Notice";
 import BackendService from "./services/BackendService";
 
 declare global {
@@ -45,6 +46,12 @@ export default class Lobby extends cc.Component {
     @property(cc.Node)
     login: cc.Node = null;
 
+    @property(cc.Node)
+    notice: cc.Node = null;
+
+    @property(cc.Prefab)
+    noticePrefab: cc.Prefab = null;
+
     async onLoad() {
         this.loading.active = true;
         if (this.accountManager.isLoggedIn) {
@@ -66,9 +73,19 @@ export default class Lobby extends cc.Component {
     }
 
     async onLoginClick() {
-        this.loading.active = true;
-        await this.accountManager.login();
-        this.accountManager.signedInCallback = this.signedIn.bind(this);
+        if (this.accountManager.isWeb3Enabled()) {
+            this.loading.active = true;
+            await this.accountManager.login();
+            this.accountManager.signedInCallback = this.signedIn.bind(this);
+        } else {
+            const noticeNode = cc.instantiate(this.noticePrefab);
+            const noticeComponent = noticeNode.getComponent(Notice);
+            noticeComponent.init({ text: 'You have not installed Metamask', buttonText: 'Install' });
+            noticeComponent.handleClickButton = () => {
+                window.open('https://metamask.io/download.html');
+            };
+            this.notice.addChild(noticeNode);
+        }
     }
 
     private async signedIn() {
