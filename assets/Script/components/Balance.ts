@@ -28,7 +28,12 @@ export default class Balance extends cc.Component {
 
     async loadBalance() {
         const balance = await this.accountManager.updateBalance();
-        this.coin.string = `${balance}`;
+        if (balance > 99999) {
+            const value = balance.toString().substring(0, 5);
+            this.coin.string = `${value}...`;
+        } else {
+            this.coin.string = `${balance}`;
+        }
     }
 
     onDestroy() {

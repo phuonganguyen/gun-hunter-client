@@ -79,11 +79,11 @@ export default class Lobby extends cc.Component {
         const contract = await this.backendService.getContract();
         this.accountManager.setContract(contract);
         await this.accountManager.initContract(contract);
-        await this.loadUserInfo();
+        await this.loadUserInfo(true);
         this.loading.active = false;
     }
 
-    async loadUserInfo() {
+    async loadUserInfo(isRedirect: boolean = false) {
         const authData = window.authData;
         this.username.string = authData.username;
         this.loadAvatar(authData.avatar_id);
@@ -98,6 +98,7 @@ export default class Lobby extends cc.Component {
         } else {
             this.noHero.active = true;
             this.hero.active = false;
+            isRedirect && cc.director.loadScene('marketplace');
         }
         this.signed.active = true;
         this.login.active = false;
