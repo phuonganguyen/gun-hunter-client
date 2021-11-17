@@ -44,7 +44,6 @@ export default class AccountManager {
     public updateBalanceCallBack: (tokenBalance) => void;
     private onTransactionCallBack: (handle: HandleTransactionResponse) => void;
     private onFisnishTransactionCallBack: () => void;
-    private roomTypes: RoomType[];
 
     setContract(contract) {
         this.contract = contract;
@@ -110,29 +109,9 @@ export default class AccountManager {
         });
     }
 
-    private async signedIn(data) {
-        this.account = data;
-        if (this.signedInCallback) {
-            this.signedInCallback();
-        }
-
-        //await this.initContract();
-        await this.updateBalance();
-        await this.getAllowance();
-
-        this.isLoggedIn = true;
-    }
-
     public async initContract(contract) {
-        console.log('init contract');
         await this.web3.eth.net.getNetworkType();
         this.tokenContract = new this.web3.eth.Contract(contract.coin.contract_abi, contract.coin.contract_address);
-
-        // return this.web3.eth.net.getNetworkType().then((netId) => {
-        //     if (!this.tokenContract) {
-        //         console.log(this.tokenContract);
-        //     }
-        // });
     }
 
     public async updateBalance() {
