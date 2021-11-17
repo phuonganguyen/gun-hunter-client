@@ -8,7 +8,6 @@ type OnChangedBet = (bet: string) => void;
 
 @ccclass
 export default class MarketPlace extends cc.Component {
-    private selectedIndex = 0;
     private readonly backendService: BackendService;
     private readonly accountManager: AccountManager;
 
@@ -45,7 +44,8 @@ export default class MarketPlace extends cc.Component {
     @property(BuyHeroSuccess)
     buyHeroSuccess: BuyHeroSuccess = null;
 
-    public onChanged: OnChangedBet = (bet) => {};
+    @property(cc.Prefab)
+    heroAnimations: cc.Prefab[] = [];
 
     private heroList = [];
     private selectedHero = null;
@@ -61,10 +61,11 @@ export default class MarketPlace extends cc.Component {
 
     loadHeroes() {
         this.heros.children.forEach((node) => {
+            node.children[0].destroyAllChildren();
             const hero = this.heroList[node.name];
-            cc.resources.load(`market-heroes/${hero.id}`, cc.SpriteFrame, (error, spriteFrame: cc.SpriteFrame) => {
-                node.children[0].getComponent(cc.Sprite).spriteFrame = spriteFrame;
-            });
+
+            const heroNode = cc.instantiate(this.heroAnimations[hero.id - 1]);
+            node.children[0].addChild(heroNode);
         });
     }
 

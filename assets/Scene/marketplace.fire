@@ -17,7 +17,7 @@
         "__id__": 2
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [],
     "_prefab": null,
     "_opacity": 255,
@@ -889,7 +889,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 87.01,
+      "width": 0,
       "height": 27.72
     },
     "_anchorPoint": {
@@ -7407,6 +7407,20 @@
     "buyHeroSuccess": {
       "__id__": 145
     },
+    "heroAnimations": [
+      {
+        "__uuid__": "fa634c8c-1a31-49b5-a84b-5243dc69a04d"
+      },
+      {
+        "__uuid__": "563c93b3-1fbb-43f9-ad5d-c307d796a48c"
+      },
+      {
+        "__uuid__": "422257e0-19ab-4590-b058-a2c127434295"
+      },
+      {
+        "__uuid__": "5c881a92-ac87-49cb-8566-b7d21c08167d"
+      }
+    ],
     "_id": "fcvqXmdylEDqVnPipLdeeV"
   }
 ]
