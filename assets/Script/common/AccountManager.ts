@@ -28,11 +28,11 @@ export default class AccountManager {
     public account: Account;
     public signedInCallback: () => void;
     public address: string;
+    public balance: number;
 
     private window = window as any;
     private static instance: AccountManager;
     private web3;
-    private user;
 
     static utils;
 
@@ -91,12 +91,7 @@ export default class AccountManager {
         return this.address;
     }
 
-    isLogined(): boolean {
-        return this.account !== null;
-    }
-
     private initAccount(account) {
-        console.log('initAccount');
         this.web3.eth.getAccounts().then((accounts) => {
             if (accounts.length > 0) {
                 this.address = accounts[0].toLowerCase();
@@ -119,8 +114,9 @@ export default class AccountManager {
             return 0;
         }
 
-        const balance = await this.getBalance(this.tokenContract);
-        return balance / 1e9 || 0;
+        const balance = (await this.getBalance(this.tokenContract)) / 1e9 || 0;
+        this.balance = balance;
+        return balance;
     }
 
     public async startUpdateBalance() {
@@ -131,13 +127,12 @@ export default class AccountManager {
         this.updateBalanceCallBack = f;
     }
 
-    private getBalance(contract) {
-        return contract.methods
-            .balanceOf(this.address)
-            .call()
-            .catch((error) => {
-                console.log(error);
-            });
+    private async getBalance(contract) {
+        try {
+            return await contract.methods.balanceOf(this.address).call();
+        } catch (ex) {
+            console.log(ex);
+        }
     }
 
     private getAllowance() {

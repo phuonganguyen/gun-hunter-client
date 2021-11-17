@@ -1,5 +1,6 @@
 import AccountManager from "./common/AccountManager";
 import BuyHeroSuccess from "./components/BuyHeroSuccess";
+import Notice from "./components/Notice";
 import BackendService from "./services/BackendService";
 
 const { ccclass, property } = cc._decorator;
@@ -46,6 +47,12 @@ export default class MarketPlace extends cc.Component {
 
     @property(cc.Prefab)
     heroAnimations: cc.Prefab[] = [];
+
+    @property(cc.Node)
+    notice: cc.Node = null;
+
+    @property(cc.Prefab)
+    noticePrefab: cc.Prefab = null;
 
     private heroList = [];
     private selectedHero = null;
@@ -105,12 +112,19 @@ export default class MarketPlace extends cc.Component {
     }
 
     async onBuyHero() {
-        this.loading.active = true;
-        const txHash = await this.accountManager.transferCoin(this.selectedHero.price);
-        const data = await this.backendService.buyHero(this.selectedHero.id, txHash);
-        this.buyHeroSuccess.setData(data, this.selectedHero.name);
-        this.loading.active = false;
-        this.dialog.active = true;
+        if (this.accountManager.balance < this.selectedHero.price) {
+            const noticeNode = cc.instantiate(this.noticePrefab);
+            const noticeComponent = noticeNode.getComponent(Notice);
+            noticeComponent.init({ text: 'Not enough GHT, please buy more.', buttonText: 'Buy Token' });
+            this.notice.addChild(noticeNode);
+        } else {
+            this.loading.active = true;
+            const txHash = await this.accountManager.transferCoin(this.selectedHero.price);
+            const data = await this.backendService.buyHero(this.selectedHero.id, txHash);
+            this.buyHeroSuccess.setData(data, this.selectedHero.name);
+            this.loading.active = false;
+            this.dialog.active = true;
+        }
     }
 
     closeDialog() {
